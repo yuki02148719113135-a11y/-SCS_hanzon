@@ -1,0 +1,11 @@
+# aws cloudtrail lookup-events --region us-east-1 --lookup-attributes AttributeKey=EventName,AttributeValue=Converse の結果（2026-11-11実行）
+# アカウントIDは 123456789012、IAMユーザー名は lab-user / old-mac-user に置き換えている。時刻はUTC（日本時間は+9時間）
+eventTime	userIdentity.arn	errorCode	今日のどのテストか
+2026-11-11T11:39:22Z	arn:aws:sts::123456789012:assumed-role/scs-gr-test/gr-test	成功	v2・ポリシーを:2に更新後（ガードレールがブロック＝guardrail_intervened）
+2026-11-11T11:38:58Z	arn:aws:sts::123456789012:assumed-role/scs-gr-test/gr-test	AccessDenied	v2・ポリシーは:1のまま（明示的拒否）
+2026-11-11T11:38:03Z	arn:aws:sts::123456789012:assumed-role/scs-gr-test/gr-test	成功	C v1・日本語の単語（素通り）
+2026-11-11T11:37:44Z	arn:aws:sts::123456789012:assumed-role/scs-gr-test/gr-test	成功	B v1・あいさつ
+2026-11-11T11:37:25Z	arn:aws:sts::123456789012:assumed-role/scs-gr-test/gr-test	AccessDenied	A ガードレールなし（明示的拒否）
+2026-11-11T11:14:32Z	arn:aws:iam::123456789012:user/old-mac-user	ValidationException	最初の失敗（ガードレールIDが空）
+2026-11-11T11:14:30Z	arn:aws:iam::123456789012:user/old-mac-user	ValidationException	最初の失敗（ガードレールIDが空）
+2026-11-11T11:14:28Z	arn:aws:iam::123456789012:user/old-mac-user	AccessDenied	最初の失敗（権限の小さいユーザー＝暗黙的拒否）

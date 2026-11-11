@@ -1,0 +1,39 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "AllowInvokeOnlyWithPinnedGuardrail",
+      "Effect": "Allow",
+      "Action": [
+        "bedrock:InvokeModel",
+        "bedrock:InvokeModelWithResponseStream"
+      ],
+      "Resource": "arn:aws:bedrock:us-east-1::foundation-model/*",
+      "Condition": {
+        "StringEquals": {
+          "bedrock:GuardrailIdentifier": "${GR_ARN}:${VERSION}"
+        }
+      }
+    },
+    {
+      "Sid": "DenyInvokeWithoutPinnedGuardrailAnyResource",
+      "Effect": "Deny",
+      "Action": [
+        "bedrock:InvokeModel",
+        "bedrock:InvokeModelWithResponseStream"
+      ],
+      "Resource": "*",
+      "Condition": {
+        "StringNotEquals": {
+          "bedrock:GuardrailIdentifier": "${GR_ARN}:${VERSION}"
+        }
+      }
+    },
+    {
+      "Sid": "AllowApplyGuardrail",
+      "Effect": "Allow",
+      "Action": "bedrock:ApplyGuardrail",
+      "Resource": "${GR_ARN}"
+    }
+  ]
+}
